@@ -9,17 +9,20 @@ sport has_many :categories
 
 category belongs_to :sport
 category has_many :rankings
+<!-- category has_many :users, :rankings -->
 
-user has_many :rankings
-user has_many :categories, through: :rankings
+<!-- user has_many :rankings -->
+<!-- user has_many :categories, through: :rankings -->
 
-ranking belongs_to :user
+<!-- ranking belongs_to :user -->
 ranking belongs_to :category
+ranking has_many :players
 
 player belongs_to :rankings
 player belongs_to :team
 
 team has_many :players
+team has_many :rankings, through: :players
 
 # Attributes
 
@@ -43,8 +46,8 @@ $ rails g resource User username:string email:string password_digest:string fav_
 
 *Ranking*
 * description
-* category_id
 * user_id
+* category_id
 
 $ rails g resource Ranking description:text user_id:integer category_id:integer user:belongs_to category:belongs_to
 

@@ -1,41 +1,36 @@
 # Association Model
 
-                        @user
-                          |
-                          ^
-@sport -< @category -< @ranking -< @player >- @team
+              @user      
+                |           
+                ^           
+@category -< @ranking -< @player >- @sport
+                            |
+                            ^
+                          @team
 
-sport has_many :categories
-
-category belongs_to :sport
 category has_many :rankings
-<!-- category has_many :users, :rankings -->
+category has_many :users, :rankings
 
-<!-- user has_many :rankings -->
-<!-- user has_many :categories, through: :rankings -->
-
-<!-- ranking belongs_to :user -->
+ranking belongs_to :user
 ranking belongs_to :category
 ranking has_many :players
 
-player belongs_to :rankings
+user has_many :rankings
+user has_many :categories, through: :rankings
+
+ranking belongs_to :user
+ranking belongs_to :category
+ranking has_many :players
+ranking has_many :sports, through: :players
+
+player belongs_to :ranking
+player belongs_to :sport
 player belongs_to :team
 
-team has_many :players
-team has_many :rankings, through: :players
+sport has_many :players
+sport has_many :rankings, through: :players
 
 # Attributes
-
-*Sport*
-* name
-
-$ rails g resource Sport name:string
-
-*Category*
-* title
-* sport_id
-
-$ rails g resource Category title:string sport_id:integer sport:belongs_to
 
 *User*
 * username
@@ -43,6 +38,11 @@ $ rails g resource Category title:string sport_id:integer sport:belongs_to
 * password_digest
 
 $ rails g resource User username:string email:string password_digest:string fav_sport:string fav_team:string fav_player:string
+
+*Category*
+* title
+
+$ rails g resource Category title:string
 
 *Ranking*
 * description
@@ -57,15 +57,17 @@ $ rails g resource Ranking description:text user_id:integer category_id:integer 
 * position
 * number
 * ranking_id
+* sport_id
 * team_id
 
-$ rails g resource Player first_name:string last_name:string position:string number:integer ranking:belongs_to team:belongs_to
+$ rails g resource Player first_name:string last_name:string position:string number:integer ranking:belongs_to team:belongs_to belongs_to:sport
+
+*Sport*
+* name
+
+$ rails g resource Sport name:string
 
 *Team*
-* city
-* name
-* year
-
 $ rails g resource Team city:string name:string year:integer
 
 ###########################**********************#############################
@@ -73,54 +75,39 @@ $ rails g resource Team city:string name:string year:integer
 ###########################**********************#############################
 
 # Scalability
-                                    @user
-                                      |
-                                      ^
-@league >- @sport -< @category -< @ranking -< @player >- @team -< @coach
-                                      v          |
-                                      |          ^   
-                                  @comment    @sneaker
+
+              @user      @sneaker   
+                |           V         
+                ^           |         
+@category -< @ranking -< @player >- @sport
+                            |          |
+                            ^          ^
+                          @team     @league
 
 # Added Associations
+category has_many :rankings
+category has_many :users, :rankings
 
-league belongs_to :sport
+ranking belongs_to :user
+ranking belongs_to :category
+ranking has_many :players
 
-<!-- sport has_many :categories -->
-sport has_many :leagues
+user has_many :rankings
+user has_many :categories, through: :rankings
 
-<!-- category belongs_to :sport -->
-<!-- category has_many :rankings -->
-
-<!-- user has_many :rankings -->
-<!-- user has_many :categories, through: :rankings -->
-user has_many :comments, through: :rankings
-
-<!-- ranking belongs_to :user -->
-<!-- ranking belongs_to :category -->
-ranking belongs_to :comment
+ranking belongs_to :user
+ranking belongs_to :category
+ranking has_many :players
+ranking has_many :sports, through: :players
 
 player belongs_to :ranking
+player belongs_to :sport
 player belongs_to :team
 
-team has_many :players
-team has_many :coaches
+sport has_many :players
+sport has_many :rankings, through: :players
 
-# Attributes
-
-*League*
-* sport_id
-
-*Sport*
-<!-- * name -->
-* gender
-
-$ rails g resource Sport name:string
-
-*Category*
-* title
-* sport_id
-
-$ rails g resource Category title:string sport_id:integer sport:belongs_to
+# Added Attributes
 
 *User*
 * username
@@ -129,8 +116,15 @@ $ rails g resource Category title:string sport_id:integer sport:belongs_to
 
 $ rails g resource User username:string email:string password_digest:string fav_sport:string fav_team:string fav_player:string
 
+*Category*
+* title
+
+$ rails g resource Category title:string
+
 *Ranking*
 * description
+* user_id
+* category_id
 
 $ rails g resource Ranking description:text user_id:integer category_id:integer user:belongs_to category:belongs_to
 
@@ -140,18 +134,15 @@ $ rails g resource Ranking description:text user_id:integer category_id:integer 
 * position
 * number
 * ranking_id
+* sport_id
 * team_id
 
-$ rails g resource Player first_name:string last_name:string position:string number:integer ranking:belongs_to team:belongs_to
+$ rails g resource Player first_name:string last_name:string position:string number:integer ranking:belongs_to team:belongs_to belongs_to:sport
+
+*Sport*
+* name
+
+$ rails g resource Sport name:string
 
 *Team*
-* city
-* name
-* year
-
-#########################################################################
-
-              @user
-                |
-                ^
-@category -< @ranking -< @sport -< @player >- @team
+$ rails g resource Team city:string name:string year:integer

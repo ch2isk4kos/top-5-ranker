@@ -4,17 +4,12 @@
                 |           
                 ^           
 @category -< @ranking -< @player >- @sport
+                            v
                             |
-                            ^
                           @team
 
 category has_many :rankings
 category has_many :users, :rankings
-
-ranking belongs_to :user
-ranking belongs_to :category
-ranking has_many :players
-ranking has_many :sports, :players
 
 user has_many :rankings
 user has_many :categories, through: :rankings
@@ -30,6 +25,8 @@ player belongs_to :team
 
 sport has_many :players
 sport has_many :rankings, through: :players
+
+team has_many :players
 
 # Attributes
 

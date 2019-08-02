@@ -5,6 +5,11 @@ Rails.application.routes.draw do
     get 'signup', to: 'users#new'
     post 'signup', to: 'users#create'
 
+    get 'login', to: 'sessions#new'
+    post 'login', to: 'sessions#create'
+
+    delete 'logout', to: 'sessions#destroy'
+
     resources :users, except: [:index]
     resources :categories
     resources :rankings
@@ -15,8 +20,5 @@ Rails.application.routes.draw do
     # resources :sports, except: [:edit, :update, :destroy] do
     #     resources :rankings, only: [:new, :create, :show]
     # end
-
-
-
-
+    
 end

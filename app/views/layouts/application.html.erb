@@ -16,8 +16,8 @@
             logged in: <%= link_to @current_user.username %>
             <%= link_to 'logout', '/logout', method: :delete %>
      <% else %>
-            <%= link_to 'Login', login_path %>
-            <%= link_to 'Signup', signup_path %>
+            <%= link_to 'login', login_path %>
+            <%= link_to 'signup', signup_path %>
         </nav>
      <% end %>
 

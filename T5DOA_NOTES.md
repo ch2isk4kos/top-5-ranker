@@ -50,7 +50,7 @@ $ rails g resource Category title:string
 * user_id
 * category_id
 
-$ rails g resource Ranking description:text user_id:integer category_id:integer user:belongs_to category:belongs_to
+$ rails g resource Ranking description:text user_id:integer category_id:integer  user:belongs_to category:belongs_to
 
 *Player*
 * first_name

@@ -1,2 +1,22 @@
 <h1>Sign Up</h1>
 <hr>
+<% if flash[:message]%>
+  <%= flash[:message] %>
+<% end %>
+<br>
+<%= form_for :user do |f| %>
+    <%= f.label :username %>
+    <%= f.text_field :username %>
+    <br>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+    <br>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+    <br>
+    <%= f.label :password_confirmation, "Confirm your password" %>
+    <%= f.password_field :password_confirmation %>
+    <br>
+    <%= f.submit "Sign Up" %>
+
+<% end %>

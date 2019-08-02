@@ -11,7 +11,7 @@ class CreatePlayers < ActiveRecord::Migration[5.2]
       t.integer :team_id
       t.belongs_to :ranking, foreign_key: true
       t.belongs_to :team, foreign_key: true
-      t.sport :belongs_to
+      t.belongs_to :sport, foreign_key: true
 
       t.timestamps
     end

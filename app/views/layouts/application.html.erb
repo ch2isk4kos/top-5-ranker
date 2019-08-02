@@ -13,8 +13,8 @@
 
      <% if logged_in? %>
         <nav class='navbar'>
-            <p>logged in: <%= @current_user.usernsme %></p>
-            <%= link_to 'Logout', '/logout', method: :delete %>
+            logged in: <%= link_to @current_user.username %>
+            <%= link_to 'logout', '/logout', method: :delete %>
      <% else %>
             <%= link_to 'Login', login_path %>
             <%= link_to 'Signup', signup_path %>
